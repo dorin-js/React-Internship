@@ -1,0 +1,27 @@
+.modal {
+  position: relative;
+  margin: 0 auto;
+  display: block;
+  width: 300px;
+  padding: 1rem;
+  background: #fff;
+  -webkit-box-shadow: 0px 3px 10px 0px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: 0px 3px 10px 0px rgba(34, 60, 80, 0.2);
+  box-shadow: 0px 3px 10px 0px rgba(34, 60, 80, 0.2);
+  border-radius: 2px;
+}
+.modalTitle {
+  font-size: 1.2rem;
+}
+.closeIcon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 100;
+  cursor: pointer;
+  padding: 2px 5px;
+}
+.closeIcon:hover {
+  background-color: rgba(204, 204, 204, 0.247);
+  border-radius: 3px;
+}

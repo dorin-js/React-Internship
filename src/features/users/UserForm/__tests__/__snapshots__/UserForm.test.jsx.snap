@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Render form should render correctly 1`] = `
+<body>
+  <div>
+    <form
+      class="createUserForm"
+      name="form"
+    >
+      <input
+        placeholder="First Name"
+        required=""
+        value=""
+      />
+      <input
+        placeholder="Last Name"
+        required=""
+        value=""
+      />
+      <input
+        data-testid="email-input-field"
+        placeholder="Email"
+        required=""
+        type="email"
+        value=""
+      />
+      <input
+        placeholder="Date of birth"
+        required=""
+        type="date"
+        value=""
+      />
+      <div
+        class="buttonsContainer"
+      >
+        <button
+          class="button"
+          data-testid="submit-button"
+          type="submit"
+        >
+          <span
+            class="buttonText"
+          >
+            Create User
+          </span>
+        </button>
+      </div>
+    </form>
+  </div>
+</body>
+`;
