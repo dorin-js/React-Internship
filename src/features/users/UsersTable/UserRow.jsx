@@ -22,7 +22,7 @@ const UserRow = ({ user, onDelete, onUserDetails }) => {
   };
 
   return (
-    <tr>
+    <tr data-testid={`row-${name}`}>
       <td>{name}</td>
       <td>{lastname}</td>
       <td>{email}</td>
@@ -30,10 +30,12 @@ const UserRow = ({ user, onDelete, onUserDetails }) => {
       <td>
         <div className="buttonsContainer">
           <Button
+            data-testid={`${id}-details`}
             value="Show Details"
             onClick={() => onUserDetails(user)}
           />
           <Button
+            data-testid={`${id}-delete`}
             value={loading ? 'Deleting...' : 'Delete'}
             onClick={deleteUser}
             disabled={loading && true}

@@ -1,12 +1,12 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-underscore-dangle */
 import React, { useEffect, useState, useCallback } from 'react';
-import { usersApi } from '../services/usersApi/usersApi';
 import Error from '../components/Error';
 import CreateUser from './CreateUser';
 import { UsersTable, UserRow } from '../../features/users/UsersTable';
 import Portal from '../components/Portal';
 import { Modal } from '../components/Modal';
+import { usersApi } from '../services/usersApi/usersApi';
 
 const Users = () => {
   const [users, setUsers] = useState([]);
@@ -27,6 +27,7 @@ const Users = () => {
 
   useEffect(() => {
     getUsers();
+    console.log(users);
   }, [getUsers]);
 
   const onDeleteUser = (id) => {
