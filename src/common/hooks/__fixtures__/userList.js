@@ -1,0 +1,28 @@
+export const usersList = [
+  {
+    _created: 1668698852.871516,
+    _data_type: 'users',
+    _is_deleted: false,
+    _modified: 1668698852.871524,
+    _self_link: 'https://crudapi.co.uk/api/v1/users/fde94e38-a0e8-4244-bbce-65943235bb47',
+    _user: 'ca1db56c-83bf-4fca-b2e8-6c31fd33f6ff',
+    _uuid: 'fde94e38-a0e8-4244-bbce-65943235bb47',
+    birth: '2022-11-28',
+    email: 'dorin.ilusca@hotmail.com',
+    lastname: 'ggg',
+    name: '6346366',
+  },
+  {
+    _created: 1668511679.512981,
+    _data_type: 'users',
+    _is_deleted: false,
+    _modified: 1668511679.512994,
+    _self_link: 'https://crudapi.co.uk/api/v1/users/9d549a7f-f881-47fb-b615-16fd0b81078e',
+    _user: 'ca1db56c-83bf-4fca-b2e8-6c31fd33f6ff',
+    _uuid: '9d549a7f-f881-47fb-b615-16fd0b81078e',
+    birth: '2022-09-27',
+    email: 'ilusca97@gmail.com',
+    lastname: 'ILUSCA',
+    name: 'DORIN',
+  },
+];

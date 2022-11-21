@@ -1,5 +1,7 @@
 import React from 'react';
-import { act, fireEvent, render, waitFor } from '@testing-library/react';
+import {
+  act, fireEvent, render, waitFor,
+} from '@testing-library/react';
 import UsersTable from '../../../features/users/UsersTable/UsersTable';
 import UserRow from '../../../features/users/UsersTable/UserRow';
 import Modal from '../../components/Modal/Modal';
@@ -56,7 +58,7 @@ describe('Users Screen', () => {
     expect(getByTestId('row-DORIN')).toBeInTheDocument();
 
     expect(getAllByTestId(/row/)).toHaveLength(users.length);
-    await act(() => {
+    act(() => {
       // eslint-disable-next-line no-underscore-dangle
       fireEvent.click(getByTestId((`${users[1]._uuid}-details`)));
       waitFor(() => {

@@ -17,7 +17,7 @@ const useGetUsers = () => {
     setLoading(false);
   }, [usersApi]);
 
-  return [execute, setUsers, { users, loading, error }];
+  return [execute, { users, loading, error }];
 };
 
 export default useGetUsers;
