@@ -4,16 +4,16 @@ import * as mockUserApi from '../../services/usersApi/usersApi';
 import { usersList } from '../__fixtures__/userList';
 
 describe('useGetUsers hook', () => {
-  // it('should call users api client', async () => {
-  //   const { result } = renderHook(useGetUsers);
-  //   const execute = result.current[0];
-  //   await act(async () => {
-  //     await execute();
-  //   });
-  //   await waitFor(async () => {
-  //     expect(mockUserApi.getAllUsers).toHaveBeenCalled();
-  //   });
-  // });
+  it('should call users api client', async () => {
+    const { result } = renderHook(useGetUsers);
+    const execute = result.current[0];
+    await act(async () => {
+      await execute();
+    });
+    await waitFor(async () => {
+      expect(mockUserApi.getAllUsers).toHaveBeenCalled();
+    });
+  });
 
   it('should set list of users', async () => {
     mockUserApi.getAllUsers.mockResolvedValue(usersList);
