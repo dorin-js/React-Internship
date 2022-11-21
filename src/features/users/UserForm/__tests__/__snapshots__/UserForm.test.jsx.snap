@@ -36,7 +36,8 @@ exports[`Render form should render correctly 1`] = `
         <button
           class="button"
           data-testid="submit-button"
-          type="submit"
+          name="Create User"
+          type="button"
         >
           <span
             class="buttonText"

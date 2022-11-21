@@ -7,34 +7,22 @@ import { UsersTable, UserRow } from '../../features/users/UsersTable';
 import Portal from '../components/Portal';
 import { Modal } from '../components/Modal';
 import { usersApi } from '../services/usersApi/usersApi';
+import useGetUsers from '../hooks/useGetUsers';
 
 const Users = () => {
-  const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [execute, setUsers, { users, loading, error }] = useGetUsers();
   const [details, setDetails] = useState();
 
-  const getUsers = useCallback(async () => {
-    setLoading(true);
-    try {
-      const { items } = await usersApi.getAllUsers();
-      setUsers(items);
-    } catch (e) {
-      setError(e.message);
-    }
-    setLoading(false);
-  }, [usersApi]);
-
   useEffect(() => {
-    getUsers();
+    execute();
     console.log(users);
-  }, [getUsers]);
+  }, [execute]);
 
-  const onDeleteUser = (id) => {
+  const onDoneDelete = (id) => {
     setUsers((prevUsers) => [...prevUsers].filter((user) => user._uuid !== id));
   };
 
-  const onCreateUser = (items) => {
+  const onDoneCreate = (items) => {
     setUsers((prevState) => [...items, ...prevState]);
   };
 
@@ -52,14 +40,14 @@ const Users = () => {
 
   return (
     <>
-      <CreateUser onCreate={onCreateUser} />
+      <CreateUser onDoneCreate={onDoneCreate} />
       <UsersTable>
         {users.map((user) => (
           <UserRow
             // eslint-disable-next-line no-underscore-dangle
             key={user._uuid}
             user={user}
-            onDelete={onDeleteUser}
+            onDoneDelete={onDoneDelete}
             onUserDetails={onUserDetails}
           />
         ))}

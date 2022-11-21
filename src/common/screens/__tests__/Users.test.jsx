@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, render } from '@testing-library/react';
+import { act, fireEvent, render, waitFor } from '@testing-library/react';
 import UsersTable from '../../../features/users/UsersTable/UsersTable';
 import UserRow from '../../../features/users/UsersTable/UserRow';
 import Modal from '../../components/Modal/Modal';
@@ -37,10 +37,8 @@ describe('Users Screen', () => {
   const handleDelete = jest.fn();
   const handleDetails = jest.fn();
 
-  it('should render table with users', () => {
-    const {
-      baseElement, getByTestId, getAllByTestId,
-    } = render(
+  it('should render table with 2 users', async () => {
+    const { baseElement, getByTestId, getAllByTestId } = render(
       <UsersTable>
         {users.map((user) => (
           <UserRow
@@ -53,12 +51,17 @@ describe('Users Screen', () => {
         ))}
       </UsersTable>,
     );
-    // expect(baseElement).toMatchSnapshot();
+
+    expect(baseElement).toMatchSnapshot();
     expect(getByTestId('row-DORIN')).toBeInTheDocument();
 
-    expect(getAllByTestId(/row/)).toHaveLength(2);
-
-    fireEvent.click(getByTestId(('9d549a7f-f881-47fb-b615-16fd0b81078e-details')));
-    expect(handleDetails).toHaveBeenCalledWith(users[1]);
+    expect(getAllByTestId(/row/)).toHaveLength(users.length);
+    await act(() => {
+      // eslint-disable-next-line no-underscore-dangle
+      fireEvent.click(getByTestId((`${users[1]._uuid}-details`)));
+      waitFor(() => {
+        expect(handleDetails).toHaveBeenCalledWith(users[1]);
+      });
+    });
   });
 });

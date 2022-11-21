@@ -12,7 +12,7 @@ const defaultFormData = {
   birth: '',
 };
 
-const UserForm = ({ onCreateUser }) => {
+const UserForm = ({ onCreateUser = undefined }) => {
   const [form, setForm] = useState(defaultFormData);
   const [loading, setLoading] = useState();
   const [error, setError] = useState(null);
@@ -29,7 +29,7 @@ const UserForm = ({ onCreateUser }) => {
   };
 
   const onValueChanged = (value) => {
-    setForm({ ...form, ...value });
+    setForm((prevState) => ({ ...prevState, ...value }));
   };
 
   return (

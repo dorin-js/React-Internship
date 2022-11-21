@@ -1,33 +1,34 @@
 import React from 'react';
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { fireEvent, render, act } from '@testing-library/react';
 import UserForm from '../UserForm';
-
-const mockPostUser = jest.fn();
-jest.mock('../../../../common/services/usersApi', () => jest.fn().mockImplementation(() => ({ postUser: mockPostUser })));
+import * as mockUserApi from '../../../../common/services/usersApi/usersApi';
 
 describe('Render form', () => {
-  it.skip('should render correctly', () => {
-    const { baseElement } = render(<UserForm onCreateUser={mockPostUser} />);
+  it('should render correctly', () => {
+    const { baseElement } = render(<UserForm onCreateUser={mockUserApi.mockPostUser} />);
     expect(baseElement).toMatchSnapshot();
   });
 
-  it('creates new user', async () => {
-    // const mockSubmit = jest.fn();
-    const onCreateUser = (items) => {
-      console.log(items);
-    };
-    const {
-      getByPlaceholderText, getByTestId,
-    } = render(<UserForm onCreateUser={onCreateUser} />);
+  it('should make an api call to create new user with given input values', async () => {
+    const { getByPlaceholderText, getByTestId } = render(
+      <UserForm onCreateUser={mockUserApi.mockPostUser} />,
+    );
+    act(() => {
+      fireEvent.change(getByPlaceholderText('First Name'), { target: { value: 'Test' } });
+      fireEvent.change(getByPlaceholderText('Last Name'), { target: { value: 'Test1' } });
+      fireEvent.change(getByPlaceholderText('Email'), { target: { value: 'test@mail.co' } });
+      fireEvent.change(getByPlaceholderText('Date of birth'), { target: { value: '2020-05-12' } });
+    });
 
-    fireEvent.change(getByPlaceholderText('First Name'), { target: { value: 'Test' } });
-    fireEvent.change(getByPlaceholderText('Last Name'), { target: { value: 'Test1' } });
-    fireEvent.change(getByPlaceholderText('Email'), { target: { value: 'test@mail.co' } });
-    fireEvent.change(getByPlaceholderText('Date of birth'), { target: { value: '27-10-2001' } });
+    await act(async () => {
+      fireEvent.click(getByTestId('submit-button'));
+    });
 
-    fireEvent.click(getByTestId('submit-button'));
-    await waitFor(async () => {
-      expect(mockPostUser).toHaveBeenCalled();
+    expect(mockUserApi.mockPostUser).toHaveBeenCalledWith({
+      name: 'Test',
+      lastname: 'Test1',
+      email: 'test@mail.co',
+      birth: '2020-05-12',
     });
   });
 });

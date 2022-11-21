@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { usersApi } from '../../../common/services/usersApi';
 import { Button } from '../../../common/components/Button';
 
-const UserRow = ({ user, onDelete, onUserDetails }) => {
+const UserRow = ({ user, onDoneDelete, onUserDetails }) => {
   const [loading, setLoading] = useState(false);
 
   const {
@@ -14,7 +14,7 @@ const UserRow = ({ user, onDelete, onUserDetails }) => {
     setLoading(true);
     try {
       await usersApi.deleteUserById(id);
-      onDelete(id);
+      onDoneDelete(id);
     } catch (e) {
       // handle error locally
     }
@@ -54,12 +54,12 @@ UserRow.propTypes = {
     email: PropTypes.string,
     birth: PropTypes.string,
   }),
-  onDelete: PropTypes.func,
+  onDoneDelete: PropTypes.func,
   onUserDetails: PropTypes.func,
 };
 UserRow.defaultProps = {
   user: {},
-  onDelete: undefined,
+  onDoneDelete: undefined,
   onUserDetails: undefined,
 };
 

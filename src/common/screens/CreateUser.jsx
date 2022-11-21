@@ -6,14 +6,14 @@ import { UserForm } from '../../features/users/UserForm';
 // import { Snackbar } from '../components/Snackbar';
 import Portal from '../components/Portal';
 
-const CreateUser = ({ onCreate }) => {
+const CreateUser = ({ onDoneCreate }) => {
   const [visible, setVisible] = useState(false);
   // const [postedStats, setPostedStats] = useState({ status: '', message: '' });
 
   const toggle = () => setVisible((currentState) => !currentState);
 
   const createUser = ({ items }) => {
-    onCreate(items);
+    onDoneCreate(items);
     // setPostedStats({ status: 'success', message: 'Created successfuly!' });
     toggle();
   };
@@ -37,7 +37,7 @@ const CreateUser = ({ onCreate }) => {
 };
 
 CreateUser.propTypes = {
-  onCreate: PropTypes.func.isRequired,
+  onDoneCreate: PropTypes.func.isRequired,
 };
 
 export default CreateUser;
