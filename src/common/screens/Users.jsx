@@ -1,30 +1,19 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable no-underscore-dangle */
-import React, { useEffect, useState, useCallback } from 'react';
-import Error from '../components/Error';
+import React, { useEffect, useState } from 'react';
 import CreateUser from './CreateUser';
-import { UsersTable, UserRow } from '../../features/users/UsersTable';
+import Error from '../components/Error';
 import Portal from '../components/Portal';
 import { Modal } from '../components/Modal';
-import { usersApi } from '../services/usersApi/usersApi';
 import useGetUsers from '../hooks/useGetUsers';
+import { UsersTable, UserRow } from '../../features/users/UsersTable';
 
 const Users = () => {
-  const [execute, setUsers, { users, loading, error }] = useGetUsers();
+  const [execute, { users, loading, error }] = useGetUsers();
   const [details, setDetails] = useState();
 
   useEffect(() => {
     execute();
-    console.log(users);
   }, [execute]);
-
-  const onDoneDelete = (id) => {
-    setUsers((prevUsers) => [...prevUsers].filter((user) => user._uuid !== id));
-  };
-
-  const onDoneCreate = (items) => {
-    setUsers((prevState) => [...items, ...prevState]);
-  };
 
   const onUserDetails = (userData) => {
     setDetails(userData);
@@ -40,14 +29,14 @@ const Users = () => {
 
   return (
     <>
-      <CreateUser onDoneCreate={onDoneCreate} />
+      <CreateUser onDoneCreate={execute} />
       <UsersTable>
         {users.map((user) => (
           <UserRow
             // eslint-disable-next-line no-underscore-dangle
             key={user._uuid}
             user={user}
-            onDoneDelete={onDoneDelete}
+            onDoneDelete={execute}
             onUserDetails={onUserDetails}
           />
         ))}

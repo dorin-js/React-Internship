@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { usersApi } from '../../../common/services/usersApi';
 import { Button } from '../../../common/components/Button';
+import { Snackbar } from '../../../common/components/Snackbar';
+import Portal from '../../../common/components/Portal';
 
 const UserRow = ({ user, onDoneDelete, onUserDetails }) => {
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const {
     _uuid: id, name, lastname, email, birth,
@@ -14,35 +17,44 @@ const UserRow = ({ user, onDoneDelete, onUserDetails }) => {
     setLoading(true);
     try {
       await usersApi.deleteUserById(id);
-      onDoneDelete(id);
+      onDoneDelete();
     } catch (e) {
-      // handle error locally
+      setError(e.message);
     }
     setLoading(false);
   };
 
   return (
-    <tr data-testid={`row-${name}`}>
-      <td>{name}</td>
-      <td>{lastname}</td>
-      <td>{email}</td>
-      <td>{birth}</td>
-      <td>
-        <div className="buttonsContainer">
-          <Button
-            data-testid={`${id}-details`}
-            value="Show Details"
-            onClick={() => onUserDetails(user)}
-          />
-          <Button
-            data-testid={`${id}-delete`}
-            value={loading ? 'Deleting...' : 'Delete'}
-            onClick={deleteUser}
-            disabled={loading && true}
-          />
-        </div>
-      </td>
-    </tr>
+    <>
+      <tr data-testid={`row-${name}`}>
+        <td>{name}</td>
+        <td>{lastname}</td>
+        <td>{email}</td>
+        <td>{birth}</td>
+        <td>
+          <div className="buttonsContainer">
+            <Button
+              data-testid={`${id}-details`}
+              value="Show Details"
+              onClick={() => onUserDetails(user)}
+            />
+            <Button
+              data-testid={`${id}-delete`}
+              value={loading ? 'Deleting...' : 'Delete'}
+              onClick={deleteUser}
+              disabled={loading && true}
+            />
+          </div>
+        </td>
+      </tr>
+      {
+        error && (
+          <Portal>
+            <Snackbar type="error" message={error} timeout={4000} />
+          </Portal>
+        )
+      }
+    </>
   );
 };
 

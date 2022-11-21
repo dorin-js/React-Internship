@@ -21,7 +21,10 @@ const UserForm = ({ onCreateUser = undefined }) => {
     setLoading(true);
     try {
       const res = await usersApi.postUser(body);
-      onCreateUser(res);
+      if (res) {
+        onCreateUser();
+      }
+      // onCreateUser();
     } catch (e) {
       setError(e.message);
     }
