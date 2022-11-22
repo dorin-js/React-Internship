@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
 import classes from './UserForm.module.css';
-import { usersApi } from '../../../common/services/usersApi/usersApi';
-import { Snackbar } from '../../../common/components/Snackbar';
 import { Button } from '../../../common/components/Button';
+import { useCreateNewUserMutation } from '../../../services/api/apiService';
+import { Snackbar } from '../../../common/components/Snackbar';
 
 const defaultFormData = {
   name: '',
@@ -12,28 +11,29 @@ const defaultFormData = {
   birth: '',
 };
 
-const UserForm = ({ onCreateUser = undefined }) => {
+const UserForm = () => {
   const [form, setForm] = useState(defaultFormData);
-  const [loading, setLoading] = useState();
-  const [error, setError] = useState(null);
 
-  const createUser = async (body) => {
-    setLoading(true);
-    try {
-      const res = await usersApi.postUser(body);
-      if (res) {
-        onCreateUser();
-      }
-      // onCreateUser();
-    } catch (e) {
-      setError(e.message);
-    }
-    setLoading(false);
-  };
+  const [createNewUser, {
+    isSuccess,
+    isLoading,
+    isError,
+    error,
+  }] = useCreateNewUserMutation();
 
   const onValueChanged = (value) => {
     setForm((prevState) => ({ ...prevState, ...value }));
   };
+
+  const onDoneCreate = (body) => {
+    createNewUser(body);
+  };
+
+  useEffect(() => {
+    if (isSuccess) {
+      setForm(defaultFormData);
+    }
+  }, [isSuccess]);
 
   return (
     <>
@@ -69,21 +69,16 @@ const UserForm = ({ onCreateUser = undefined }) => {
           onChange={(e) => onValueChanged({ birth: e.target.value })}
         />
         <div className="buttonsContainer">
-          <Button data-testid="submit-button" onClick={() => createUser(form)} value={loading ? 'Creating...' : 'Create User'} />
+          <Button
+            data-testid="submit-button"
+            value={isLoading ? 'Creating...' : 'Create User'}
+            onClick={() => onDoneCreate(form)}
+          />
         </div>
       </form>
-      {
-        error && <Snackbar type="error" message={error} timeout={4} />
-      }
+      {isError && <Snackbar type="error" message={error.data.error} timeout={4000} />}
     </>
   );
-};
-
-UserForm.propTypes = {
-  onCreateUser: PropTypes.func,
-};
-UserForm.defaultProps = {
-  onCreateUser: () => undefined,
 };
 
 export default UserForm;

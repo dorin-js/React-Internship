@@ -1,28 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { usersApi } from '../../../common/services/usersApi';
 import { Button } from '../../../common/components/Button';
 import { Snackbar } from '../../../common/components/Snackbar';
 import Portal from '../../../common/components/Portal';
+import { useDeleteUserMutation } from '../../../services/api/apiService';
 
-const UserRow = ({ user, onDoneDelete, onUserDetails }) => {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-
+const UserRow = ({ user, onUserDetails }) => {
   const {
-    _uuid: id, name, lastname, email, birth,
+    id, name, lastname, email, birth,
   } = user;
 
-  const deleteUser = async () => {
-    setLoading(true);
-    try {
-      await usersApi.deleteUserById(id);
-      onDoneDelete();
-    } catch (e) {
-      setError(e.message);
-    }
-    setLoading(false);
-  };
+  const [deleteUser, {
+    isLoading,
+    isError,
+    error,
+  }] = useDeleteUserMutation();
 
   return (
     <>
@@ -40,17 +32,17 @@ const UserRow = ({ user, onDoneDelete, onUserDetails }) => {
             />
             <Button
               data-testid={`${id}-delete`}
-              value={loading ? 'Deleting...' : 'Delete'}
-              onClick={deleteUser}
-              disabled={loading && true}
+              value={isLoading ? 'Deleting...' : 'Delete'}
+              onClick={() => deleteUser(id)}
+              disabled={isLoading && true}
             />
           </div>
         </td>
       </tr>
       {
-        error && (
+        isError && (
           <Portal>
-            <Snackbar type="error" message={error} timeout={4000} />
+            <Snackbar type="error" message={error.data.error} timeout={4000} />
           </Portal>
         )
       }
@@ -60,18 +52,16 @@ const UserRow = ({ user, onDoneDelete, onUserDetails }) => {
 
 UserRow.propTypes = {
   user: PropTypes.PropTypes.shape({
-    _uuid: PropTypes.string,
+    id: PropTypes.string,
     name: PropTypes.string,
     lastname: PropTypes.string,
     email: PropTypes.string,
     birth: PropTypes.string,
   }),
-  onDoneDelete: PropTypes.func,
   onUserDetails: PropTypes.func,
 };
 UserRow.defaultProps = {
   user: {},
-  onDoneDelete: undefined,
   onUserDetails: undefined,
 };
 

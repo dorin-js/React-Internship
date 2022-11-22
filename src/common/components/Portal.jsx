@@ -4,6 +4,7 @@ import { createPortal } from 'react-dom';
 const Portal = ({ children }) => {
   const mount = document.getElementById('portal-root');
   const el = document.createElement('div');
+  el.style = 'position: relative';
 
   useEffect(() => {
     mount.appendChild(el);
