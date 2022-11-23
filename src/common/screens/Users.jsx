@@ -1,41 +1,19 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable no-underscore-dangle */
-import React, { useEffect, useState, useCallback } from 'react';
-import { usersApi } from '../services/usersApi/usersApi';
-import Error from '../components/Error';
+import React, { useEffect, useState } from 'react';
 import CreateUser from './CreateUser';
-import { UsersTable, UserRow } from '../../features/users/UsersTable';
+import Error from '../components/Error';
 import Portal from '../components/Portal';
 import { Modal } from '../components/Modal';
+import useGetUsers from '../hooks/useGetUsers';
+import { UsersTable, UserRow } from '../../features/users/UsersTable';
 
 const Users = () => {
-  const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [execute, { users, loading, error }] = useGetUsers();
   const [details, setDetails] = useState();
 
-  const getUsers = useCallback(async () => {
-    setLoading(true);
-    try {
-      const { items } = await usersApi.getAllUsers();
-      setUsers(items);
-    } catch (e) {
-      setError(e.message);
-    }
-    setLoading(false);
-  }, [usersApi]);
-
   useEffect(() => {
-    getUsers();
-  }, [getUsers]);
-
-  const onDeleteUser = (id) => {
-    setUsers((prevUsers) => [...prevUsers].filter((user) => user._uuid !== id));
-  };
-
-  const onCreateUser = (items) => {
-    setUsers((prevState) => [...items, ...prevState]);
-  };
+    execute();
+  }, [execute]);
 
   const onUserDetails = (userData) => {
     setDetails(userData);
@@ -51,14 +29,14 @@ const Users = () => {
 
   return (
     <>
-      <CreateUser onCreate={onCreateUser} />
+      <CreateUser onDoneCreate={execute} />
       <UsersTable>
         {users.map((user) => (
           <UserRow
             // eslint-disable-next-line no-underscore-dangle
             key={user._uuid}
             user={user}
-            onDelete={onDeleteUser}
+            onDoneDelete={execute}
             onUserDetails={onUserDetails}
           />
         ))}

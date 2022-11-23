@@ -32,5 +32,6 @@ module.exports = {
     'import/prefer-default-export': 0,
     'import/no-cycle': [0, { ignoreExternal: true }],
     'no-unused-vars': 'warn',
+    'linebreak-style': 0,
   },
 };

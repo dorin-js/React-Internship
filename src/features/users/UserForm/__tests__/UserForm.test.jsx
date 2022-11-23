@@ -1,32 +1,34 @@
 import React from 'react';
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { fireEvent, render, act } from '@testing-library/react';
 import UserForm from '../UserForm';
-
-jest.mock('../../../../common/services/usersApi');
+import * as mockUserApi from '../../../../common/services/usersApi/usersApi';
 
 describe('Render form', () => {
-  const mockSubmit = jest.fn();
-
-  it.skip('should render correctly', () => {
-    const { baseElement, debug } = render(<UserForm onCreateUser={mockSubmit} />);
+  it('should render correctly', () => {
+    const { baseElement } = render(<UserForm onCreateUser={mockUserApi.mockPostUser} />);
     expect(baseElement).toMatchSnapshot();
   });
 
-  it('creates new user', async () => {
-    const {
-      getByPlaceholderText, getByTestId,
-    } = render(<UserForm onCreateUser={mockSubmit} />);
+  it('should make an api call to create new user with given input values', async () => {
+    const { getByPlaceholderText, getByTestId } = render(
+      <UserForm onCreateUser={mockUserApi.mockPostUser} />,
+    );
+    act(() => {
+      fireEvent.change(getByPlaceholderText('First Name'), { target: { value: 'Test' } });
+      fireEvent.change(getByPlaceholderText('Last Name'), { target: { value: 'Test1' } });
+      fireEvent.change(getByPlaceholderText('Email'), { target: { value: 'test@mail.co' } });
+      fireEvent.change(getByPlaceholderText('Date of birth'), { target: { value: '2020-05-12' } });
+    });
 
-    console.log(jest.fn());
+    await act(async () => {
+      fireEvent.click(getByTestId('submit-button'));
+    });
 
-    fireEvent.change(getByPlaceholderText('First Name'), { target: { value: 'Test' } });
-    fireEvent.change(getByPlaceholderText('Last Name'), { target: { value: 'Test1' } });
-    fireEvent.change(getByPlaceholderText('Email'), { target: { value: 'test@mail.co' } });
-    fireEvent.change(getByPlaceholderText('Date of birth'), { target: { value: '27-10-2001' } });
-
-    fireEvent.click(getByTestId('submit-button'));
-    await waitFor(async () => {
-      expect(mockSubmit).toHaveBeenCalledWith({});
+    expect(mockUserApi.mockPostUser).toHaveBeenCalledWith({
+      name: 'Test',
+      lastname: 'Test1',
+      email: 'test@mail.co',
+      birth: '2020-05-12',
     });
   });
 });

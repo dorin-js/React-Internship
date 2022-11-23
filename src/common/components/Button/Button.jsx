@@ -4,7 +4,8 @@ import classes from './Button.module.css';
 
 const Button = ({ value, ...props }) => (
   <button
-    type="submit"
+    type="button"
+    name={value}
     className={classes.button}
     // eslint-disable-next-line react/jsx-props-no-spreading
     {...props}

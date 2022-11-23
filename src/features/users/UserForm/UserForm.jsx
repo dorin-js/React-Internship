@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import classes from './UserForm.module.css';
-import { usersApi } from '../../../common/services/usersApi';
+import { usersApi } from '../../../common/services/usersApi/usersApi';
 import { Snackbar } from '../../../common/components/Snackbar';
 import { Button } from '../../../common/components/Button';
 
@@ -12,7 +12,7 @@ const defaultFormData = {
   birth: '',
 };
 
-const UserForm = ({ onCreateUser }) => {
+const UserForm = ({ onCreateUser = undefined }) => {
   const [form, setForm] = useState(defaultFormData);
   const [loading, setLoading] = useState();
   const [error, setError] = useState(null);
@@ -21,7 +21,10 @@ const UserForm = ({ onCreateUser }) => {
     setLoading(true);
     try {
       const res = await usersApi.postUser(body);
-      onCreateUser(res);
+      if (res) {
+        onCreateUser();
+      }
+      // onCreateUser();
     } catch (e) {
       setError(e.message);
     }
@@ -29,12 +32,7 @@ const UserForm = ({ onCreateUser }) => {
   };
 
   const onValueChanged = (value) => {
-    setForm({ ...form, ...value });
-  };
-
-  const onFormSubmited = (e) => {
-    e.preventDefault();
-    createUser(form);
+    setForm((prevState) => ({ ...prevState, ...value }));
   };
 
   return (
@@ -71,7 +69,7 @@ const UserForm = ({ onCreateUser }) => {
           onChange={(e) => onValueChanged({ birth: e.target.value })}
         />
         <div className="buttonsContainer">
-          <Button data-testid="submit-button" onClick={onFormSubmited} value={loading ? 'Creating...' : 'Create User'} />
+          <Button data-testid="submit-button" onClick={() => createUser(form)} value={loading ? 'Creating...' : 'Create User'} />
         </div>
       </form>
       {
