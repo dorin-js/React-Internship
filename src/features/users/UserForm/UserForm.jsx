@@ -25,10 +25,6 @@ const UserForm = () => {
     setForm((prevState) => ({ ...prevState, ...value }));
   };
 
-  const onDoneCreate = (body) => {
-    createNewUser(body);
-  };
-
   useEffect(() => {
     if (isSuccess) {
       setForm(defaultFormData);
@@ -72,7 +68,7 @@ const UserForm = () => {
           <Button
             data-testid="submit-button"
             value={isLoading ? 'Creating...' : 'Create User'}
-            onClick={() => onDoneCreate(form)}
+            onClick={() => createNewUser(form)}
           />
         </div>
       </form>

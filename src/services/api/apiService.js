@@ -1,8 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { BASE_URL, HEADERS } from './constants';
 
-const invalidateUsersOnSuccess = (isSuccess) => {
-  if (isSuccess) {
+const invalidateUsersOnSuccess = (result) => {
+  if (result) {
     return ['AllUsers'];
   }
   return [];
@@ -11,7 +11,7 @@ const invalidateUsersOnSuccess = (isSuccess) => {
 export const apiService = createApi({
   reducerPath: 'usersApi',
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL, headers: HEADERS }),
-  tagTypes: ['AllUsers', 'User'],
+  tagTypes: ['AllUsers'],
   endpoints: (builder) => ({
     getAllUsers: builder.query({
       query: () => '/users',
@@ -29,7 +29,7 @@ export const apiService = createApi({
       query: (userId) => `/users${userId}`,
     }),
     createNewUser: builder.mutation({
-      query: (body) => ({ url: '/users', method: 'POST', body }),
+      query: (body) => ({ url: '/users', method: 'POST', body: [body] }),
       invalidatesTags: invalidateUsersOnSuccess,
     }),
     deleteUser: builder.mutation({
