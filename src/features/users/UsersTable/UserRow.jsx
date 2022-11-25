@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useDeleteUserMutation } from '../../../services/api/apiService';
 import { Button } from '../../../common/components/Button';
 import { Snackbar } from '../../../common/components/Snackbar';
 import Portal from '../../../common/components/Portal';
-import { useDeleteUserMutation, useUpdateUserMutation } from '../../../services/api/apiService';
 import Modal from '../../../common/components/Modal/Modal';
 import UserForm from '../UserForm/UserForm';
 
@@ -54,7 +54,7 @@ const UserRow = ({ user, onUserDetails }) => {
       {
         isErrorOnDeletingUser && (
           <Portal>
-            <Snackbar type="error" message={isErrorOnDeletingUser.data.error} timeout={4000} />
+            <Snackbar type="error" message={deleteUserError.data.error} timeout={4000} />
           </Portal>
         )
       }
