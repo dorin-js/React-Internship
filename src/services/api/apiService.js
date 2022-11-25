@@ -29,11 +29,26 @@ export const apiService = createApi({
       query: (userId) => `/users${userId}`,
     }),
     createNewUser: builder.mutation({
-      query: (body) => ({ url: '/users', method: 'POST', body: [body] }),
+      query: (body) => ({
+        url: '/users',
+        method: 'POST',
+        body: [body],
+      }),
       invalidatesTags: invalidateUsersOnSuccess,
     }),
     deleteUser: builder.mutation({
-      query: (userId) => ({ url: `/users/${userId}`, method: 'DELETE' }),
+      query: (userId) => ({
+        url: `/users/${userId}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: invalidateUsersOnSuccess,
+    }),
+    updateUser: builder.mutation({
+      query: (body) => ({
+        url: `/users/${body.id}`,
+        method: 'PUT',
+        body,
+      }),
       invalidatesTags: invalidateUsersOnSuccess,
     }),
   }),
@@ -44,4 +59,5 @@ export const {
   useGetUserByIdQuery,
   useCreateNewUserMutation,
   useDeleteUserMutation,
+  useUpdateUserMutation,
 } = apiService;
