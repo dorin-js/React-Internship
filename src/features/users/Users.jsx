@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import CreateUser from './CreateUser';
+import CreateUser from '../user/CreateUser';
 import { Modal } from '../../common/components/Modal';
 import { UsersTable, UserRow } from './UsersTable';
 import { useGetAllUsersQuery } from '../../services/api/apiService';

@@ -1,17 +1,16 @@
 import React from 'react';
 import { fireEvent, render, act } from '@testing-library/react';
 import UserForm from '../UserForm';
-import * as mockUserApi from '../../../../common/services/usersApi/usersApi';
 
 describe('Render form', () => {
   it('should render correctly', () => {
-    const { baseElement } = render(<UserForm onCreateUser={mockUserApi.mockPostUser} />);
+    const { baseElement } = render(<UserForm />);
     expect(baseElement).toMatchSnapshot();
   });
 
   it('should make an api call to create new user with given input values', async () => {
     const { getByPlaceholderText, getByTestId } = render(
-      <UserForm onCreateUser={mockUserApi.mockPostUser} />,
+      <UserForm />,
     );
     act(() => {
       fireEvent.change(getByPlaceholderText('First Name'), { target: { value: 'Test' } });
@@ -24,7 +23,7 @@ describe('Render form', () => {
       fireEvent.click(getByTestId('submit-button'));
     });
 
-    expect(mockUserApi.mockPostUser).toHaveBeenCalledWith({
+    expect(jest.fn()).toHaveBeenCalledWith({
       name: 'Test',
       lastname: 'Test1',
       email: 'test@mail.co',
