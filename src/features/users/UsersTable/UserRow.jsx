@@ -5,7 +5,7 @@ import { Button } from '../../../common/components/Button';
 import { Snackbar } from '../../../common/components/Snackbar';
 import Portal from '../../../common/components/Portal';
 import Modal from '../../../common/components/Modal/Modal';
-import UserForm from '../UserForm/UserForm';
+import UserForm from '../../user/UserForm/UserForm';
 
 const UserRow = ({ user, onUserDetails }) => {
   const [isEditing, setIsEditing] = useState(false);
