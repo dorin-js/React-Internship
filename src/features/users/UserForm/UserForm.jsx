@@ -1,39 +1,49 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
+import { PropTypes } from 'prop-types';
 import classes from './UserForm.module.css';
-import { usersApi } from '../../../common/services/usersApi/usersApi';
-import { Snackbar } from '../../../common/components/Snackbar';
 import { Button } from '../../../common/components/Button';
+import { useCreateNewUserMutation, useUpdateUserMutation } from '../../../services/api/apiService';
+import { Snackbar } from '../../../common/components/Snackbar';
 
 const defaultFormData = {
+  id: '',
   name: '',
   lastname: '',
   email: '',
   birth: '',
 };
 
-const UserForm = ({ onCreateUser = undefined }) => {
+const UserForm = ({ isEditing, user }) => {
   const [form, setForm] = useState(defaultFormData);
-  const [loading, setLoading] = useState();
-  const [error, setError] = useState(null);
 
-  const createUser = async (body) => {
-    setLoading(true);
-    try {
-      const res = await usersApi.postUser(body);
-      if (res) {
-        onCreateUser();
-      }
-      // onCreateUser();
-    } catch (e) {
-      setError(e.message);
+  useEffect(() => {
+    if (user?.name) {
+      setForm(user);
     }
-    setLoading(false);
-  };
+  }, [user]);
+
+  const [updateUser, {
+    isLoading: isUpdatingInProgress,
+    isError: isUpdateUserInfoError,
+    error: updateUserInfoError,
+  }] = useUpdateUserMutation();
+
+  const [createNewUser, {
+    isSuccess,
+    isLoading: isCreatingInProgress,
+    isError: isCreateNewUserError,
+    error: createNewUserError,
+  }] = useCreateNewUserMutation();
 
   const onValueChanged = (value) => {
     setForm((prevState) => ({ ...prevState, ...value }));
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      setForm(defaultFormData);
+    }
+  }, [isSuccess]);
 
   return (
     <>
@@ -69,21 +79,44 @@ const UserForm = ({ onCreateUser = undefined }) => {
           onChange={(e) => onValueChanged({ birth: e.target.value })}
         />
         <div className="buttonsContainer">
-          <Button data-testid="submit-button" onClick={() => createUser(form)} value={loading ? 'Creating...' : 'Create User'} />
+          {
+            isEditing
+              ? (
+                <Button
+                  data-testid="submit-button"
+                  value={isUpdatingInProgress ? 'Saving...' : 'Save'}
+                  onClick={() => updateUser(form)}
+                />
+              )
+              : (
+                <Button
+                  data-testid="submit-button"
+                  value={isCreatingInProgress ? 'Creating...' : 'Create new User'}
+                  onClick={() => createNewUser(form)}
+                />
+              )
+          }
         </div>
       </form>
-      {
-        error && <Snackbar type="error" message={error} timeout={4} />
-      }
+      {isCreateNewUserError && <Snackbar type="error" message={createNewUserError.data.error} timeout={4000} />}
+      {isUpdateUserInfoError && <Snackbar type="error" message={updateUserInfoError.data.error} timeout={4000} />}
     </>
   );
 };
 
 UserForm.propTypes = {
-  onCreateUser: PropTypes.func,
+  user: PropTypes.PropTypes.shape({
+    id: PropTypes.string,
+    name: PropTypes.string,
+    lastname: PropTypes.string,
+    email: PropTypes.string,
+    birth: PropTypes.string,
+  }),
+  isEditing: PropTypes.bool,
 };
 UserForm.defaultProps = {
-  onCreateUser: () => undefined,
+  user: {},
+  isEditing: undefined,
 };
 
 export default UserForm;

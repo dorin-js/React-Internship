@@ -1,27 +1,27 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { usersApi } from '../../../common/services/usersApi';
+import { useDeleteUserMutation } from '../../../services/api/apiService';
 import { Button } from '../../../common/components/Button';
 import { Snackbar } from '../../../common/components/Snackbar';
 import Portal from '../../../common/components/Portal';
+import Modal from '../../../common/components/Modal/Modal';
+import UserForm from '../UserForm/UserForm';
 
-const UserRow = ({ user, onDoneDelete, onUserDetails }) => {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+const UserRow = ({ user, onUserDetails }) => {
+  const [isEditing, setIsEditing] = useState(false);
 
   const {
-    _uuid: id, name, lastname, email, birth,
+    id, name, lastname, email, birth,
   } = user;
 
-  const deleteUser = async () => {
-    setLoading(true);
-    try {
-      await usersApi.deleteUserById(id);
-      onDoneDelete();
-    } catch (e) {
-      setError(e.message);
-    }
-    setLoading(false);
+  const [deleteUser, {
+    isLoading: isDeleteInProgress,
+    isError: isErrorOnDeletingUser,
+    error: deleteUserError,
+  }] = useDeleteUserMutation();
+
+  const onUpdateUser = () => {
+    setIsEditing(true);
   };
 
   return (
@@ -40,38 +40,50 @@ const UserRow = ({ user, onDoneDelete, onUserDetails }) => {
             />
             <Button
               data-testid={`${id}-delete`}
-              value={loading ? 'Deleting...' : 'Delete'}
-              onClick={deleteUser}
-              disabled={loading && true}
+              value={isDeleteInProgress ? 'Deleting...' : 'Delete'}
+              onClick={() => deleteUser(id)}
+              disabled={isDeleteInProgress && true}
+            />
+            <Button
+              value="Modify"
+              onClick={onUpdateUser}
             />
           </div>
         </td>
       </tr>
       {
-        error && (
+        isErrorOnDeletingUser && (
           <Portal>
-            <Snackbar type="error" message={error} timeout={4000} />
+            <Snackbar type="error" message={deleteUserError.data.error} timeout={4000} />
           </Portal>
         )
       }
+      {
+        isEditing && (
+          <Portal>
+            <Modal title="Update user" onClose={() => setIsEditing(false)}>
+              <UserForm user={user} isEditing={isEditing} />
+            </Modal>
+          </Portal>
+        )
+      }
+
     </>
   );
 };
 
 UserRow.propTypes = {
   user: PropTypes.PropTypes.shape({
-    _uuid: PropTypes.string,
+    id: PropTypes.string,
     name: PropTypes.string,
     lastname: PropTypes.string,
     email: PropTypes.string,
     birth: PropTypes.string,
   }),
-  onDoneDelete: PropTypes.func,
   onUserDetails: PropTypes.func,
 };
 UserRow.defaultProps = {
   user: {},
-  onDoneDelete: undefined,
   onUserDetails: undefined,
 };
 

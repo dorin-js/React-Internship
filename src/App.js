@@ -1,12 +1,15 @@
 import React from 'react';
+import { Provider } from 'react-redux';
 import './App.css';
-import Users from './common/screens/Users';
+import store from './app/store';
+import Users from './features/users/Users';
 
 const App = () => (
-  <div className="App">
-    <h2 className="title">Users List</h2>
-    <Users />
-  </div>
+  <Provider store={store}>
+    <div className="App">
+      <Users />
+    </div>
+  </Provider>
 );
 
 export default App;
