@@ -42,11 +42,12 @@ const UserRow = ({ user, onUserDetails }) => {
               data-testid={`${id}-delete`}
               value={isDeleteInProgress ? 'Deleting...' : 'Delete'}
               onClick={() => deleteUser(id)}
-              disabled={isDeleteInProgress && true}
+              disabled={isDeleteInProgress}
             />
             <Button
-              value="Modify"
+              value="Edit"
               onClick={onUpdateUser}
+              disabled={isEditing}
             />
           </div>
         </td>

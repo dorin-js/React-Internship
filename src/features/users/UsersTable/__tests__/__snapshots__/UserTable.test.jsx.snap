@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Users Screen should render table with 2 users 1`] = `
+exports[`Users Table should render table with 2 users 1`] = `
 <body>
   <div>
     <main
@@ -27,19 +27,19 @@ exports[`Users Screen should render table with 2 users 1`] = `
         </thead>
         <tbody>
           <tr
-            data-testid="row-6346366"
+            data-testid="row-Jake"
           >
             <td>
-              6346366
+              Jake
             </td>
             <td>
-              ggg
+              Sully
             </td>
             <td>
-              dorin.ilusca@hotmail.com
+              jake@mail.com
             </td>
             <td>
-              2022-11-28
+              2022-10-24
             </td>
             <td>
               <div
@@ -47,7 +47,7 @@ exports[`Users Screen should render table with 2 users 1`] = `
               >
                 <button
                   class="button"
-                  data-testid="fde94e38-a0e8-4244-bbce-65943235bb47-details"
+                  data-testid="e512ee0a-0022-4041-ad26-479e425cbaab-details"
                   name="Show Details"
                   type="button"
                 >
@@ -59,7 +59,7 @@ exports[`Users Screen should render table with 2 users 1`] = `
                 </button>
                 <button
                   class="button"
-                  data-testid="fde94e38-a0e8-4244-bbce-65943235bb47-delete"
+                  data-testid="e512ee0a-0022-4041-ad26-479e425cbaab-delete"
                   name="Delete"
                   type="button"
                 >
@@ -67,25 +67,36 @@ exports[`Users Screen should render table with 2 users 1`] = `
                     class="buttonText"
                   >
                     Delete
+                  </span>
+                </button>
+                <button
+                  class="button"
+                  name="Edit"
+                  type="button"
+                >
+                  <span
+                    class="buttonText"
+                  >
+                    Edit
                   </span>
                 </button>
               </div>
             </td>
           </tr>
           <tr
-            data-testid="row-DORIN"
+            data-testid="row-John"
           >
             <td>
-              DORIN
+              John
             </td>
             <td>
-              ILUSCA
+              Doe
             </td>
             <td>
-              ilusca97@gmail.com
+              jonhndoe@mail.co
             </td>
             <td>
-              2022-09-27
+              2022-11-16
             </td>
             <td>
               <div
@@ -93,7 +104,7 @@ exports[`Users Screen should render table with 2 users 1`] = `
               >
                 <button
                   class="button"
-                  data-testid="9d549a7f-f881-47fb-b615-16fd0b81078e-details"
+                  data-testid="d31330d2-8d7c-4d63-abcd-bbfa0b7c705f-details"
                   name="Show Details"
                   type="button"
                 >
@@ -105,7 +116,7 @@ exports[`Users Screen should render table with 2 users 1`] = `
                 </button>
                 <button
                   class="button"
-                  data-testid="9d549a7f-f881-47fb-b615-16fd0b81078e-delete"
+                  data-testid="d31330d2-8d7c-4d63-abcd-bbfa0b7c705f-delete"
                   name="Delete"
                   type="button"
                 >
@@ -113,6 +124,17 @@ exports[`Users Screen should render table with 2 users 1`] = `
                     class="buttonText"
                   >
                     Delete
+                  </span>
+                </button>
+                <button
+                  class="button"
+                  name="Edit"
+                  type="button"
+                >
+                  <span
+                    class="buttonText"
+                  >
+                    Edit
                   </span>
                 </button>
               </div>

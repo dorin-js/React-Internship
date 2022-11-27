@@ -78,25 +78,21 @@ const UserForm = ({ isEditing, user }) => {
           value={form.birth}
           onChange={(e) => onValueChanged({ birth: e.target.value })}
         />
-        <div className="buttonsContainer">
-          {
-            isEditing
-              ? (
-                <Button
-                  data-testid="submit-button"
-                  value={isUpdatingInProgress ? 'Saving...' : 'Save'}
-                  onClick={() => updateUser(form)}
-                />
-              )
-              : (
-                <Button
-                  data-testid="submit-button"
-                  value={isCreatingInProgress ? 'Creating...' : 'Create new User'}
-                  onClick={() => createNewUser(form)}
-                />
-              )
-          }
-        </div>
+        {
+          isEditing
+            ? (
+              <Button
+                value={isUpdatingInProgress ? 'Saving...' : 'Save'}
+                onClick={() => updateUser(form)}
+              />
+            )
+            : (
+              <Button
+                value={isCreatingInProgress ? 'Creating...' : 'Create'}
+                onClick={() => createNewUser(form)}
+              />
+            )
+        }
       </form>
       {isCreateNewUserError && <Snackbar type="error" message={createNewUserError.data.error} timeout={4000} />}
       {isUpdateUserInfoError && <Snackbar type="error" message={updateUserInfoError.data.error} timeout={4000} />}
