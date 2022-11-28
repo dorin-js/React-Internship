@@ -9,43 +9,34 @@ exports[`Render form should render correctly 1`] = `
     >
       <input
         placeholder="First Name"
-        required=""
         value=""
       />
       <input
         placeholder="Last Name"
-        required=""
         value=""
       />
       <input
         data-testid="email-input-field"
         placeholder="Email"
-        required=""
         type="email"
         value=""
       />
       <input
         placeholder="Date of birth"
-        required=""
         type="date"
         value=""
       />
-      <div
-        class="buttonsContainer"
+      <button
+        class="button"
+        name="Create"
+        type="button"
       >
-        <button
-          class="button"
-          data-testid="submit-button"
-          name="Create User"
-          type="button"
+        <span
+          class="buttonText"
         >
-          <span
-            class="buttonText"
-          >
-            Create User
-          </span>
-        </button>
-      </div>
+          Create
+        </span>
+      </button>
     </form>
   </div>
 </body>

@@ -52,13 +52,11 @@ const UserForm = ({ isEditing, user }) => {
         className={classes.createUserForm}
       >
         <input
-          required
           placeholder="First Name"
           value={form.name}
           onChange={(e) => onValueChanged({ name: e.target.value })}
         />
         <input
-          required
           placeholder="Last Name"
           value={form.lastname}
           onChange={(e) => onValueChanged({ lastname: e.target.value })}
@@ -66,14 +64,12 @@ const UserForm = ({ isEditing, user }) => {
         <input
           type="email"
           data-testid="email-input-field"
-          required
           placeholder="Email"
           value={form.email}
           onChange={(e) => onValueChanged({ email: e.target.value })}
         />
         <input
           type="date"
-          required
           placeholder="Date of birth"
           value={form.birth}
           onChange={(e) => onValueChanged({ birth: e.target.value })}

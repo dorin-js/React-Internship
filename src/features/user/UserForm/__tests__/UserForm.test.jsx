@@ -17,7 +17,17 @@ describe('Render form', () => {
     useUpdateUserMutation.mockImplementation(() => ({}))
   });
 
-  it.skip('should render correctly', () => {
+  it('should render correctly', () => {
+    const createNewUser = jest.fn();
+    const updateUser = jest.fn();
+    useUpdateUserMutation.mockImplementation(() => ([
+      updateUser,
+      { isLoading: false, isError: false, error: null }
+    ]));
+    useCreateNewUserMutation.mockImplementation(() => ([
+      createNewUser,
+      { isSucces: true, isLoading: false, isError: false, error: null }
+    ]));
     const { baseElement } = render(<UserForm />);
     expect(baseElement).toMatchSnapshot();
   });
