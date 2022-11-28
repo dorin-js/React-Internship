@@ -37,19 +37,13 @@ describe('Render form', () => {
     const { getByPlaceholderText, getByRole } = renderWithProviders(
       <UserForm />
     );
-    screen.debug();
 
-    act(() => {
-      fireEvent.change(getByPlaceholderText('First Name'), { target: { value: 'Test' } });
-      fireEvent.change(getByPlaceholderText('Last Name'), { target: { value: 'Test1' } });
-      fireEvent.change(getByPlaceholderText('Email'), { target: { value: 'test@mail.co' } });
-      fireEvent.change(getByPlaceholderText('Date of birth'), { target: { value: '2020-05-12' } });
-    });
+    fireEvent.change(getByPlaceholderText('First Name'), { target: { value: 'Test' } });
+    fireEvent.change(getByPlaceholderText('Last Name'), { target: { value: 'Test1' } });
+    fireEvent.change(getByPlaceholderText('Email'), { target: { value: 'test@mail.co' } });
+    fireEvent.change(getByPlaceholderText('Date of birth'), { target: { value: '2020-05-12' } });
 
-
-    await act(async () => {
-      fireEvent.click(getByRole('button', { name: 'Create' }));
-    });
+    fireEvent.click(getByRole('button', { name: 'Create' }));
 
     expect(createNewUser).toHaveBeenCalledWith({
       name: 'Test',

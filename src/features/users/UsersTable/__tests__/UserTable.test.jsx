@@ -11,7 +11,6 @@ describe('Users Table', () => {
     );
 
     expect(baseElement).toMatchSnapshot();
-    // screen.debug();
 
     expect(getByTestId('row-John')).toBeInTheDocument();
 

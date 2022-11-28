@@ -9,13 +9,15 @@ export const renderWithProviders = (
   {
     preloadedState = {},
     store = setupStore(preloadedState),
-    ...renderOptions
   } = {},
 ) => {
-  const Wrapper = ({ children }) => (<Provider store={store}>{children}</Provider>);
+  const Wrapper = ({ children }) => (
+    <Provider store={store}>{children}</Provider>
+  );
+
   Wrapper.propTypes = {
     children: PropTypes.node.isRequired,
   };
 
-  return { store, ...render(ui, { wrapper: Wrapper, ...renderOptions }) };
+  return { store, ...render(ui, { wrapper: Wrapper }) };
 };

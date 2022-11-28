@@ -6,19 +6,26 @@ import Users from '../Users';
 import { usersList } from '../__fixtures__/userList';
 import { renderWithProviders } from '../../../utils/test-utils';
 import {
-  useGetAllUsersQuery, useDeleteUserMutation, useUpdateUserMutation
+  useGetAllUsersQuery,
+  useDeleteUserMutation,
+  useUpdateUserMutation,
+  useCreateNewUserMutation
 } from '../../../services/api/apiService';
 
 jest.mock('../../../services/api/apiService', () => ({
   useGetAllUsersQuery: jest.fn(),
   useDeleteUserMutation: jest.fn(),
   useUpdateUserMutation: jest.fn(),
+  useCreateNewUserMutation: jest.fn(),
 }));
+
 
 describe('Users Screen', () => {
   beforeEach(() => {
-    useGetAllUsersQuery.mockImplementation(() => ({}))
-    useDeleteUserMutation.mockImplementation(() => ({}))
+    useGetAllUsersQuery.mockImplementation(() => ({}));
+    useDeleteUserMutation.mockImplementation(() => ([]));;
+    useCreateNewUserMutation.mockImplementation(() => ([]));
+    useUpdateUserMutation.mockImplementation(() => ([]))
   });
 
   it('should fetch the users data by calling the hook useGetAllUsersQuery', () => {
@@ -54,26 +61,40 @@ describe('Users Screen', () => {
   })
 
   describe('with data', () => {
-    it.skip('renders correctly', async () => {
+    beforeEach(() => {
+      const createNewUser = jest.fn();
+      const updateUser = jest.fn();
+      const deleteUser = jest.fn();
+      useUpdateUserMutation.mockImplementation(() => ([
+        updateUser,
+        { isLoading: false, isError: false, error: null }
+      ]));
+      useDeleteUserMutation.mockImplementation(() => ([
+        deleteUser,
+        { isLoading: false, isError: false, error: null }
+      ]));
+      useCreateNewUserMutation.mockImplementation(() => ([
+        createNewUser,
+        { isSucces: true, isLoading: false, isError: false, error: null }
+      ]));
+    })
+
+    it('renders correctly', async () => {
       const { baseElement } = renderWithProviders(<Users />);
       expect(baseElement).toMatchSnapshot();
     });
 
-    it.skip('should render UsersTable and CreateUser components', () => {
+    it('should render UsersTable and CreateUser components', () => {
       useGetAllUsersQuery.mockImplementation(() => ({
-        users: usersList,
         data: usersList,
       }));
 
       const { getByText, getByRole } = renderWithProviders(<Users />);
-
       screen.debug();
-      expect(getByText(/new user/i)).toBeInTheDocument();
-
       const usersTable = getByRole('table');
       const rowElement = getByText('John');
       expect(usersTable).toBeInTheDocument();
       expect(rowElement).toBeInTheDocument();
-    })
+    });
   })
 });
