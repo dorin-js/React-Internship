@@ -1,66 +1,65 @@
 import React from 'react';
-import { fireEvent, render, act, screen } from '@testing-library/react';
+import {
+  fireEvent, render, act, screen, waitFor,
+} from '@testing-library/react';
 import UserForm from '../UserForm';
 import { renderWithProviders } from '../../../../utils/test-utils';
 import {
-  useUpdateUserMutation, useCreateNewUserMutation
+  useUpdateUserMutation, useCreateNewUserMutation,
 } from '../../../../services/api/apiService';
-
-jest.mock('../../../../services/api/apiService', () => ({
-  useCreateNewUserMutation: jest.fn(),
-  useUpdateUserMutation: jest.fn(),
-}));
+import { usersList } from '../../../users/__fixtures__/userList';
 
 describe('Render form', () => {
   beforeEach(() => {
-    useCreateNewUserMutation.mockImplementation(() => ({}))
-    useUpdateUserMutation.mockImplementation(() => ({}))
+    fetch.resetMocks();
   });
 
   it('should render correctly', () => {
-    const createNewUser = jest.fn();
-    const updateUser = jest.fn();
-    useUpdateUserMutation.mockImplementation(() => ([
-      updateUser,
-      { isLoading: false, isError: false, error: null }
-    ]));
-    useCreateNewUserMutation.mockImplementation(() => ([
-      createNewUser,
-      { isSucces: true, isLoading: false, isError: false, error: null }
-    ]));
-    const { baseElement } = render(<UserForm />);
+    const { baseElement } = renderWithProviders(<UserForm />);
     expect(baseElement).toMatchSnapshot();
   });
 
-  it('should make an api call to create new user with given input values', async () => {
-    const createNewUser = jest.fn();
-    const updateUser = jest.fn();
-    useUpdateUserMutation.mockImplementation(() => ([
-      updateUser,
-      { isLoading: false, isError: false, error: null }
-    ]));
-    useCreateNewUserMutation.mockImplementation(() => ([
-      createNewUser,
-      { isSucces: true, isLoading: false, isError: false, error: null }
-    ]));
+  it('should make an api call with given input values', async () => {
+    fetch.mockResponseOnce(JSON.stringify({
+      items: [
+        {
+          _created: 1669709177.617638,
+          _data_type: 'users',
+          _is_deleted: false,
+          _modified: 1669709177.617651,
+          _self_link: 'https://crudapi.co.uk/api/v1/users/a9606a8e-3f3b-4eee-a3d7-124404dcffa5',
+          _user: 'ca1db56c-83bf-4fca-b2e8-6c31fd33f6ff',
+          _uuid: 'a9606a8e-3f3b-4eee-a3d7-124404dcffa5',
+          birth: '2022-11-01',
+          email: 'ilusca97@gmail.com',
+          id: '',
+          lastname: 'ILUSCA',
+          name: 'DORIN',
+        },
+      ],
+    }));
 
-    const { getByPlaceholderText, getByRole } = renderWithProviders(
-      <UserForm />
-    );
+    act(() => renderWithProviders(
+      <UserForm />,
+    ));
+    act(() => {
+      fireEvent.change(screen.getByPlaceholderText('First Name'), { target: { value: 'DORIN' } });
+      fireEvent.change(screen.getByPlaceholderText('Last Name'), { target: { value: 'ILUSCA' } });
+      fireEvent.change(screen.getByPlaceholderText('Email'), { target: { value: 'ilusca97@gmail.com' } });
+      fireEvent.change(screen.getByPlaceholderText('Date of birth'), { target: { value: '2022-11-012' } });
+    });
 
-    fireEvent.change(getByPlaceholderText('First Name'), { target: { value: 'Test' } });
-    fireEvent.change(getByPlaceholderText('Last Name'), { target: { value: 'Test1' } });
-    fireEvent.change(getByPlaceholderText('Email'), { target: { value: 'test@mail.co' } });
-    fireEvent.change(getByPlaceholderText('Date of birth'), { target: { value: '2020-05-12' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Create' }));
 
-    fireEvent.click(getByRole('button', { name: 'Create' }));
-
-    expect(createNewUser).toHaveBeenCalledWith({
-      name: 'Test',
-      lastname: 'Test1',
-      email: 'test@mail.co',
-      birth: '2020-05-12',
-      id: '',
+    await waitFor(() => {
+      // expect(fetch).toHaveBeenCalledWith({
+      //   birth: '2022-11-01',
+      //   email: 'ilusca97@gmail.com',
+      //   id: '',
+      //   lastname: 'ILUSCA',
+      //   name: 'DORIN',
+      // });
+      console.log(fetch.mock);
     });
   });
 });

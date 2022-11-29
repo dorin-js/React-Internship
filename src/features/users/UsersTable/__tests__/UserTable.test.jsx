@@ -1,13 +1,17 @@
 import React from 'react';
+import { fireEvent, waitFor, screen } from '@testing-library/react';
 import { usersList } from '../../__fixtures__/userList';
 import { renderWithProviders } from '../../../../utils/test-utils';
 import UsersTable from '../UsersTable';
 
 describe('Users Table', () => {
+  const onUserDetails = jest.fn();
 
   it('should render table with 2 users', async () => {
-    const { baseElement, getByTestId, getAllByTestId } = renderWithProviders(
-      <UsersTable users={usersList} />
+    const {
+      baseElement, getByTestId, getAllByTestId, getByRole,
+    } = renderWithProviders(
+      <UsersTable users={usersList} />,
     );
 
     expect(baseElement).toMatchSnapshot();
@@ -16,9 +20,10 @@ describe('Users Table', () => {
 
     expect(getAllByTestId(/row/)).toHaveLength(usersList.length);
 
-    // fireEvent.click(getByRole(('button', { name: 'Show Details'})));
+    // screen.debug();
+    // fireEvent.click(getByTestId(`${usersList[1].id}-details`));
     // await waitFor(() => {
-    //   expect().toHaveBeenCalledWith(usersList[1]);
+    //   expect(onUserDetails).toHaveBeenCalledWith(usersList[1]);
     // });
   });
-})
+});

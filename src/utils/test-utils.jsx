@@ -12,7 +12,9 @@ export const renderWithProviders = (
   } = {},
 ) => {
   const Wrapper = ({ children }) => (
-    <Provider store={store}>{children}</Provider>
+    <div id="portal-root">
+      <Provider store={store}>{children}</Provider>
+    </div>
   );
 
   Wrapper.propTypes = {

@@ -3,146 +3,150 @@
 exports[`Users Table should render table with 2 users 1`] = `
 <body>
   <div>
-    <main
-      class="main"
+    <div
+      id="portal-root"
     >
-      <table
-        class="usersTable"
+      <main
+        class="main"
       >
-        <thead>
-          <tr>
-            <th>
-              First Name
-            </th>
-            <th>
-              Last Name
-            </th>
-            <th>
-              Email
-            </th>
-            <th>
-              Date of Birth
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            data-testid="row-Jake"
-          >
-            <td>
-              Jake
-            </td>
-            <td>
-              Sully
-            </td>
-            <td>
-              jake@mail.com
-            </td>
-            <td>
-              2022-10-24
-            </td>
-            <td>
-              <div
-                class="buttonsContainer"
-              >
-                <button
-                  class="button"
-                  data-testid="e512ee0a-0022-4041-ad26-479e425cbaab-details"
-                  name="Show Details"
-                  type="button"
+        <table
+          class="usersTable"
+        >
+          <thead>
+            <tr>
+              <th>
+                First Name
+              </th>
+              <th>
+                Last Name
+              </th>
+              <th>
+                Email
+              </th>
+              <th>
+                Date of Birth
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              data-testid="row-Jake"
+            >
+              <td>
+                Jake
+              </td>
+              <td>
+                Sully
+              </td>
+              <td>
+                jake@mail.com
+              </td>
+              <td>
+                2022-10-24
+              </td>
+              <td>
+                <div
+                  class="buttonsContainer"
                 >
-                  <span
-                    class="buttonText"
+                  <button
+                    class="button"
+                    data-testid="e512ee0a-0022-4041-ad26-479e425cbaab-details"
+                    name="Show Details"
+                    type="button"
                   >
-                    Show Details
-                  </span>
-                </button>
-                <button
-                  class="button"
-                  data-testid="e512ee0a-0022-4041-ad26-479e425cbaab-delete"
-                  name="Delete"
-                  type="button"
+                    <span
+                      class="buttonText"
+                    >
+                      Show Details
+                    </span>
+                  </button>
+                  <button
+                    class="button"
+                    data-testid="e512ee0a-0022-4041-ad26-479e425cbaab-delete"
+                    name="Delete"
+                    type="button"
+                  >
+                    <span
+                      class="buttonText"
+                    >
+                      Delete
+                    </span>
+                  </button>
+                  <button
+                    class="button"
+                    name="Edit"
+                    type="button"
+                  >
+                    <span
+                      class="buttonText"
+                    >
+                      Edit
+                    </span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <tr
+              data-testid="row-John"
+            >
+              <td>
+                John
+              </td>
+              <td>
+                Doe
+              </td>
+              <td>
+                jonhndoe@mail.co
+              </td>
+              <td>
+                2022-11-16
+              </td>
+              <td>
+                <div
+                  class="buttonsContainer"
                 >
-                  <span
-                    class="buttonText"
+                  <button
+                    class="button"
+                    data-testid="d31330d2-8d7c-4d63-abcd-bbfa0b7c705f-details"
+                    name="Show Details"
+                    type="button"
                   >
-                    Delete
-                  </span>
-                </button>
-                <button
-                  class="button"
-                  name="Edit"
-                  type="button"
-                >
-                  <span
-                    class="buttonText"
+                    <span
+                      class="buttonText"
+                    >
+                      Show Details
+                    </span>
+                  </button>
+                  <button
+                    class="button"
+                    data-testid="d31330d2-8d7c-4d63-abcd-bbfa0b7c705f-delete"
+                    name="Delete"
+                    type="button"
                   >
-                    Edit
-                  </span>
-                </button>
-              </div>
-            </td>
-          </tr>
-          <tr
-            data-testid="row-John"
-          >
-            <td>
-              John
-            </td>
-            <td>
-              Doe
-            </td>
-            <td>
-              jonhndoe@mail.co
-            </td>
-            <td>
-              2022-11-16
-            </td>
-            <td>
-              <div
-                class="buttonsContainer"
-              >
-                <button
-                  class="button"
-                  data-testid="d31330d2-8d7c-4d63-abcd-bbfa0b7c705f-details"
-                  name="Show Details"
-                  type="button"
-                >
-                  <span
-                    class="buttonText"
+                    <span
+                      class="buttonText"
+                    >
+                      Delete
+                    </span>
+                  </button>
+                  <button
+                    class="button"
+                    name="Edit"
+                    type="button"
                   >
-                    Show Details
-                  </span>
-                </button>
-                <button
-                  class="button"
-                  data-testid="d31330d2-8d7c-4d63-abcd-bbfa0b7c705f-delete"
-                  name="Delete"
-                  type="button"
-                >
-                  <span
-                    class="buttonText"
-                  >
-                    Delete
-                  </span>
-                </button>
-                <button
-                  class="button"
-                  name="Edit"
-                  type="button"
-                >
-                  <span
-                    class="buttonText"
-                  >
-                    Edit
-                  </span>
-                </button>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </main>
+                    <span
+                      class="buttonText"
+                    >
+                      Edit
+                    </span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </main>
+    </div>
   </div>
 </body>
 `;

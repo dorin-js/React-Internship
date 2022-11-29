@@ -3,41 +3,45 @@
 exports[`Render form should render correctly 1`] = `
 <body>
   <div>
-    <form
-      class="createUserForm"
-      name="form"
+    <div
+      id="portal-root"
     >
-      <input
-        placeholder="First Name"
-        value=""
-      />
-      <input
-        placeholder="Last Name"
-        value=""
-      />
-      <input
-        data-testid="email-input-field"
-        placeholder="Email"
-        type="email"
-        value=""
-      />
-      <input
-        placeholder="Date of birth"
-        type="date"
-        value=""
-      />
-      <button
-        class="button"
-        name="Create"
-        type="button"
+      <form
+        class="createUserForm"
+        name="form"
       >
-        <span
-          class="buttonText"
+        <input
+          placeholder="First Name"
+          value=""
+        />
+        <input
+          placeholder="Last Name"
+          value=""
+        />
+        <input
+          data-testid="email-input-field"
+          placeholder="Email"
+          type="email"
+          value=""
+        />
+        <input
+          placeholder="Date of birth"
+          type="date"
+          value=""
+        />
+        <button
+          class="button"
+          name="Create"
+          type="button"
         >
-          Create
-        </span>
-      </button>
-    </form>
+          <span
+            class="buttonText"
+          >
+            Create
+          </span>
+        </button>
+      </form>
+    </div>
   </div>
 </body>
 `;
