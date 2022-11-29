@@ -1,9 +1,19 @@
 .createUserForm input {
   display: block;
-  margin: 25px auto;
   padding: 4px;
   width: 100%;
   max-width: 100%;
   border: 1px solid #24292e;
   border-radius: 2px;
+}
+
+.createUserForm p {
+  margin-top: 5px;
+  padding: 0;
+  color: rgb(255, 66, 66);
+  font-size: 0.9em;
+}
+
+.inputContainer {
+  margin: 25px auto;
 }

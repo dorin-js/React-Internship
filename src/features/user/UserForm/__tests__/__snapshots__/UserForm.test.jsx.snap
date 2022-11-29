@@ -10,34 +10,57 @@ exports[`Render form should render correctly 1`] = `
         class="createUserForm"
         name="form"
       >
-        <input
-          placeholder="First Name"
-          value=""
-        />
-        <input
-          placeholder="Last Name"
-          value=""
-        />
-        <input
-          data-testid="email-input-field"
-          placeholder="Email"
-          type="email"
-          value=""
-        />
-        <input
-          placeholder="Date of birth"
-          type="date"
-          value=""
-        />
+        <div
+          class="inputContainer"
+        >
+          <input
+            name="firstname"
+            placeholder="First Name"
+          />
+          <p />
+        </div>
+        <div
+          class="inputContainer"
+        >
+          <input
+            name="lastname"
+            placeholder="Last Name"
+          />
+          <p />
+        </div>
+        <div
+          class="inputContainer"
+        >
+          <input
+            data-testid="email-input-field"
+            name="email"
+            placeholder="Email"
+            type="email"
+          />
+          <p />
+        </div>
+        <div
+          class="inputContainer"
+        >
+          <input
+            max="2022-11-29"
+            min="1900-01-01"
+            name="birthDate"
+            placeholder="Date of birth"
+            type="date"
+          />
+          <p />
+        </div>
         <button
+          aria-label="Create user"
           class="button"
-          name="Create"
-          type="button"
+          name="Save"
+          type="submit"
         >
           <span
             class="buttonText"
           >
-            Create
+            Save
           </span>
         </button>
       </form>
