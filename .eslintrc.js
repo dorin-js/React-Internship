@@ -34,5 +34,6 @@ module.exports = {
     'import/no-cycle': [0, { ignoreExternal: true }],
     'no-unused-vars': 'warn',
     'linebreak-style': 0,
+    'react/jsx-props-no-spreading': 'off',
   },
 };

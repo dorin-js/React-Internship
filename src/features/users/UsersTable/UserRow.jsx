@@ -11,7 +11,7 @@ const UserRow = ({ user, onUserDetails }) => {
   const [isEditing, setIsEditing] = useState(false);
 
   const {
-    id, name, lastname, email, birth,
+    id, firstname, lastname, email, birthDate,
   } = user;
 
   const [deleteUser, {
@@ -26,11 +26,11 @@ const UserRow = ({ user, onUserDetails }) => {
 
   return (
     <>
-      <tr data-testid={`row-${name}`}>
-        <td>{name}</td>
+      <tr data-testid={`row-${firstname}`}>
+        <td>{firstname}</td>
         <td>{lastname}</td>
         <td>{email}</td>
-        <td>{birth}</td>
+        <td>{birthDate}</td>
         <td>
           <div className="buttonsContainer">
             <Button
@@ -76,10 +76,10 @@ const UserRow = ({ user, onUserDetails }) => {
 UserRow.propTypes = {
   user: PropTypes.PropTypes.shape({
     id: PropTypes.string,
-    name: PropTypes.string,
+    firstname: PropTypes.string,
     lastname: PropTypes.string,
     email: PropTypes.string,
-    birth: PropTypes.string,
+    birthDate: PropTypes.string,
   }),
   onUserDetails: PropTypes.func,
 };
