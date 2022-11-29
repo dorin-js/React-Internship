@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Render form should render correctly 1`] = `
+<body>
+  <div>
+    <div
+      id="portal-root"
+    >
+      <form
+        class="createUserForm"
+        name="form"
+      >
+        <input
+          placeholder="First Name"
+          value=""
+        />
+        <input
+          placeholder="Last Name"
+          value=""
+        />
+        <input
+          data-testid="email-input-field"
+          placeholder="Email"
+          type="email"
+          value=""
+        />
+        <input
+          placeholder="Date of birth"
+          type="date"
+          value=""
+        />
+        <button
+          class="button"
+          name="Create"
+          type="button"
+        >
+          <span
+            class="buttonText"
+          >
+            Create
+          </span>
+        </button>
+      </form>
+    </div>
+  </div>
+</body>
+`;

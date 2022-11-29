@@ -5,7 +5,7 @@ import { Button } from '../../../common/components/Button';
 import { Snackbar } from '../../../common/components/Snackbar';
 import Portal from '../../../common/components/Portal';
 import Modal from '../../../common/components/Modal/Modal';
-import UserForm from '../UserForm/UserForm';
+import UserForm from '../../user/UserForm/UserForm';
 
 const UserRow = ({ user, onUserDetails }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -42,11 +42,12 @@ const UserRow = ({ user, onUserDetails }) => {
               data-testid={`${id}-delete`}
               value={isDeleteInProgress ? 'Deleting...' : 'Delete'}
               onClick={() => deleteUser(id)}
-              disabled={isDeleteInProgress && true}
+              disabled={isDeleteInProgress}
             />
             <Button
-              value="Modify"
+              value="Edit"
               onClick={onUpdateUser}
+              disabled={isEditing}
             />
           </div>
         </td>

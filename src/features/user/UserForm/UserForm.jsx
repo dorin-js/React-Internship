@@ -52,13 +52,11 @@ const UserForm = ({ isEditing, user }) => {
         className={classes.createUserForm}
       >
         <input
-          required
           placeholder="First Name"
           value={form.name}
           onChange={(e) => onValueChanged({ name: e.target.value })}
         />
         <input
-          required
           placeholder="Last Name"
           value={form.lastname}
           onChange={(e) => onValueChanged({ lastname: e.target.value })}
@@ -66,37 +64,31 @@ const UserForm = ({ isEditing, user }) => {
         <input
           type="email"
           data-testid="email-input-field"
-          required
           placeholder="Email"
           value={form.email}
           onChange={(e) => onValueChanged({ email: e.target.value })}
         />
         <input
           type="date"
-          required
           placeholder="Date of birth"
           value={form.birth}
           onChange={(e) => onValueChanged({ birth: e.target.value })}
         />
-        <div className="buttonsContainer">
-          {
-            isEditing
-              ? (
-                <Button
-                  data-testid="submit-button"
-                  value={isUpdatingInProgress ? 'Saving...' : 'Save'}
-                  onClick={() => updateUser(form)}
-                />
-              )
-              : (
-                <Button
-                  data-testid="submit-button"
-                  value={isCreatingInProgress ? 'Creating...' : 'Create new User'}
-                  onClick={() => createNewUser(form)}
-                />
-              )
-          }
-        </div>
+        {
+          isEditing
+            ? (
+              <Button
+                value={isUpdatingInProgress ? 'Saving...' : 'Save'}
+                onClick={() => updateUser(form)}
+              />
+            )
+            : (
+              <Button
+                value={isCreatingInProgress ? 'Creating...' : 'Create'}
+                onClick={() => createNewUser(form)}
+              />
+            )
+        }
       </form>
       {isCreateNewUserError && <Snackbar type="error" message={createNewUserError.data.error} timeout={4000} />}
       {isUpdateUserInfoError && <Snackbar type="error" message={updateUserInfoError.data.error} timeout={4000} />}

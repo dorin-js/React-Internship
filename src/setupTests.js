@@ -1,3 +1,8 @@
 import '@testing-library/jest-dom';
+import { enableFetchMocks } from 'jest-fetch-mock';
 
-jest.mock('./common/services/usersApi/usersApi');
+enableFetchMocks();
+
+beforeEach(() => {
+  fetch.resetMocks();
+});
