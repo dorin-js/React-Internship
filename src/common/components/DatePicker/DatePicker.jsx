@@ -11,7 +11,6 @@ const DatePicker = ({ name, ...props }) => {
     <div className={classes.inputContainer}>
       <input
         className={`${classes.input} ${errors[name] && classes.inputError}`}
-        max={new Date().toISOString().split('T')[0]}
         {...register(name, validator[name])}
         {...props}
       />

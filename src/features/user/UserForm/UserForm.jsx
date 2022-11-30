@@ -8,6 +8,8 @@ import { Snackbar } from '../../../common/components/Snackbar';
 import FormInput from '../../../common/components/FormInput/FormInput';
 import DatePicker from '../../../common/components/DatePicker/DatePicker';
 
+const currentDate = new Date().toISOString().split('T')[0];
+
 const UserForm = ({ isEditing, user }) => {
   const {
     firstname, lastname, email, birthDate, id,
@@ -70,6 +72,7 @@ const UserForm = ({ isEditing, user }) => {
             type="date"
             placeholder="Date of birth"
             min="1900-01-01"
+            max={currentDate}
           />
           <Button
             type="submit"
