@@ -30,11 +30,11 @@ describe('Render form', () => {
           _self_link: 'https://crudapi.co.uk/api/v1/users/a9606a8e-3f3b-4eee-a3d7-124404dcffa5',
           _user: 'ca1db56c-83bf-4fca-b2e8-6c31fd33f6ff',
           _uuid: 'a9606a8e-3f3b-4eee-a3d7-124404dcffa5',
-          birth: '2022-11-01',
+          birthDate: '2022-11-01',
           email: 'ilusca97@gmail.com',
           id: '',
           lastname: 'ILUSCA',
-          name: 'DORIN',
+          firstname: 'DORIN',
         },
       ],
     }));

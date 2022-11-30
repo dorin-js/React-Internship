@@ -20,9 +20,9 @@ export const apiService = createApi({
         // eslint-disable-next-line no-underscore-dangle
         id: item._uuid,
         email: item.email,
-        birth: item.birth,
+        birthDate: item.birthDate,
         lastname: item.lastname,
-        name: item.name,
+        firstname: item.firstname,
       })),
     }),
     getUserById: builder.query({

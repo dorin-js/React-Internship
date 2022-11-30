@@ -22,7 +22,7 @@ const UsersTable = ({ users }) => {
             <th>First Name</th>
             <th>Last Name</th>
             <th>Email</th>
-            <th>Date of Birth</th>
+            <th>Birth Date</th>
           </tr>
         </thead>
         <tbody>
@@ -38,10 +38,10 @@ const UsersTable = ({ users }) => {
 
       {details && (
         <Modal onClose={() => onUserDetails(null)}>
-          <h5>{details.name}</h5>
+          <h5>{details.firstname}</h5>
           <h5>{details.lastname}</h5>
           <h5>{details.email}</h5>
-          <h5>{details.birth}</h5>
+          <h5>{details.birthDate}</h5>
         </Modal>
       )}
     </main>
