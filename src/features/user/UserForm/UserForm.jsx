@@ -1,26 +1,31 @@
 /* eslint-disable no-useless-escape */
-import React, { useEffect } from 'react';
+import React from 'react';
 import { PropTypes } from 'prop-types';
-import { useForm } from 'react-hook-form';
-import classes from './UserForm.module.css';
-import { Button } from '../../../common/components/Button';
+import { useForm, FormProvider } from 'react-hook-form';
 import { useCreateNewUserMutation, useUpdateUserMutation } from '../../../services/api/apiService';
+import { Button } from '../../../common/components/Button';
 import { Snackbar } from '../../../common/components/Snackbar';
+import FormInput from '../../../common/components/FormInput/FormInput';
+import DatePicker from '../../../common/components/DatePicker/DatePicker';
+
+const currentDate = new Date().toISOString().split('T')[0];
 
 const UserForm = ({ isEditing, user }) => {
   const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setValue,
-  } = useForm();
+    firstname, lastname, email, birthDate, id,
+  } = user;
 
-  useEffect(() => {
-    if (isEditing) {
-      const fields = ['firstname', 'lastname', 'email', 'birthDate', 'id'];
-      fields.forEach((field) => setValue(field, user[field]));
-    }
-  }, [isEditing, setValue, user]);
+  const methods = useForm(
+    isEditing && {
+      defaultValues: {
+        firstname,
+        lastname,
+        email,
+        birthDate,
+        id,
+      },
+    },
+  );
 
   const [updateUser, {
     isLoading: isUpdatingInProgress,
@@ -44,94 +49,38 @@ const UserForm = ({ isEditing, user }) => {
 
   return (
     <>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        name="form"
-        className={classes.createUserForm}
-      >
-        <div className={classes.inputContainer}>
-          <input
+      <FormProvider {...methods}>
+        <form
+          onSubmit={methods.handleSubmit(onSubmit)}
+          name="form"
+        >
+          <FormInput
+            name="firstname"
             placeholder="First Name"
-            {...register('firstname', {
-              required: {
-                value: true,
-                message: 'First Name is required',
-              },
-              maxLength: {
-                value: 30,
-                message: 'The input is too long',
-              },
-              pattern: {
-                value: /^[a-zA-Z]+$/,
-                message: 'Name shoud contain letters only',
-              },
-            })}
           />
-          <p>{errors?.firstname?.message}</p>
-        </div>
-        <div className={classes.inputContainer}>
-          <input
+          <FormInput
+            name="lastname"
             placeholder="Last Name"
-            {...register('lastname', {
-              required: {
-                value: true,
-                message: 'Last Name is required',
-              },
-              maxLength: {
-                value: 30,
-                message: 'The input is too long',
-              },
-              pattern: {
-                value: /^[a-zA-Z]+$/,
-                message: 'Name shoud contain letters only',
-              },
-            })}
           />
-          <p>{errors?.lastname?.message}</p>
-        </div>
-        <div className={classes.inputContainer}>
-          <input
-            type="email"
-            data-testid="email-input-field"
+          <FormInput
+            name="email"
             placeholder="Email"
-            {...register('email', {
-              required: {
-                value: true,
-                message: 'Email is required',
-              },
-              maxLength: {
-                value: 30,
-                message: 'The input is too long',
-              },
-              pattern: {
-                value: /^\w+([\.-]?\w+)*@\w+([\.]\w+)(\.\w{2,5})?$/,
-                message: 'Incorrect email format',
-              },
-            })}
+            data-testid="email-input-field"
           />
-          <p>{errors?.email?.message}</p>
-        </div>
-        <div className={classes.inputContainer}>
-          <input
+          <DatePicker
+            name="birthDate"
             type="date"
             placeholder="Date of birth"
             min="1900-01-01"
-            max={new Date().toISOString().split('T')[0]}
-            {...register('birthDate', {
-              required: {
-                value: true,
-                message: 'Birth date is required',
-              },
-            })}
+            max={currentDate}
           />
-          <p>{errors?.birthDate?.message}</p>
-        </div>
-        <Button
-          type="submit"
-          aria-label={isEditing ? 'Update user' : 'Create user'}
-          value={(isUpdatingInProgress || isCreatingInProgress) ? 'Saving...' : 'Save'}
-        />
-      </form>
+          <Button
+            type="submit"
+            aria-label={isEditing ? 'Update user' : 'Create user'}
+            value={(isUpdatingInProgress || isCreatingInProgress) ? 'Saving...' : 'Save'}
+          />
+        </form>
+      </FormProvider>
       {
         (isCreateNewUserError || isUpdateUserError)
         && (

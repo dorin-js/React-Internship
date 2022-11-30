@@ -1,13 +1,9 @@
 import React from 'react';
 import {
-  fireEvent, render, act, screen, waitFor,
+  fireEvent, act, screen, waitFor,
 } from '@testing-library/react';
 import UserForm from '../UserForm';
 import { renderWithProviders } from '../../../../utils/test-utils';
-import {
-  useUpdateUserMutation, useCreateNewUserMutation,
-} from '../../../../services/api/apiService';
-import { usersList } from '../../../users/__fixtures__/userList';
 
 describe('Render form', () => {
   beforeEach(() => {
