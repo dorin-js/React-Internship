@@ -1,0 +1,24 @@
+.input {
+  display: block;
+  padding: 4px;
+  width: 100%;
+  max-width: 100%;
+  border: 1px solid #24292e;
+  border-radius: 2px;
+}
+
+.inputError {
+  border: 1px solid rgb(255, 66, 66) !important;
+  outline: 1px solid rgb(255, 66, 66) !important;
+}
+
+.inputContainer {
+  margin: 25px auto;
+}
+
+.inputContainer p {
+  margin-top: 5px;
+  padding: 0;
+  color: rgb(255, 66, 66);
+  font-size: 0.9em;
+}
