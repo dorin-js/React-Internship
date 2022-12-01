@@ -7,7 +7,6 @@ const Button = ({ value, ...props }) => (
     type="button"
     name={value}
     className={classes.button}
-    // eslint-disable-next-line react/jsx-props-no-spreading
     {...props}
   >
     <span className={classes.buttonText}>{value}</span>

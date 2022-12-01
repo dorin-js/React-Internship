@@ -16,7 +16,7 @@ const UsersTable = ({ users }) => {
   };
   return (
     <main className={classes.main}>
-      <table className={classes.usersTable}>
+      <table className={`${classes.usersTable} ${classes.hscroll}`}>
         <thead>
           <tr>
             <th>First Name</th>

@@ -14,7 +14,7 @@ const DatePicker = ({ name, ...props }) => {
         {...register(name, validator[name])}
         {...props}
       />
-      <p>{errors[name]?.message}</p>
+      {errors[name] && (<p role="alert">{errors[name]?.message}</p>)}
     </div>
   );
 };
