@@ -18,9 +18,27 @@ body {
 #root {
   display: flex;
   justify-content: center;
+  width: 100%;
+  padding: 0 2rem;
 }
 
 .buttonsContainer {
   display: flex;
   gap: 10px;
+}
+
+.container {
+  margin: 0 14px;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+@media (max-width: 663px) {
+  #root {
+    display: block;
+  }
 }

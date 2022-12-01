@@ -22,8 +22,10 @@ const Users = () => {
 
   return (
     <>
-      <h2 className="title">Users List</h2>
-      <CreateUser />
+      <div className="container">
+        <h2 className="title">Users List</h2>
+        <CreateUser />
+      </div>
       <UsersTable users={users} />
     </>
   );

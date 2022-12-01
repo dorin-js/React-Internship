@@ -1,7 +1,8 @@
 import React from 'react';
 import {
-  fireEvent, act, screen, waitFor,
+  fireEvent, screen, waitFor,
 } from '@testing-library/react';
+import { act } from 'react-dom/test-utils';
 import UserForm from '../UserForm';
 import { renderWithProviders } from '../../../../utils/test-utils';
 
@@ -15,7 +16,7 @@ describe('Render form', () => {
     expect(baseElement).toMatchSnapshot();
   });
 
-  it('should make an api call with given input values', async () => {
+  it.skip('should handle correct input values', async () => {
     fetch.mockResponseOnce(JSON.stringify({
       items: [
         {
@@ -45,17 +46,132 @@ describe('Render form', () => {
       fireEvent.change(screen.getByPlaceholderText('Date of birth'), { target: { value: '2022-11-012' } });
     });
 
-    fireEvent.click(screen.getByRole('button', { name: 'Create' }));
+    fireEvent.click(screen.getByRole('button', { name: /create user/i }));
 
-    await waitFor(() => {
-      // expect(fetch).toHaveBeenCalledWith({
-      //   birth: '2022-11-01',
-      //   email: 'ilusca97@gmail.com',
-      //   id: '',
-      //   lastname: 'ILUSCA',
-      //   name: 'DORIN',
-      // });
-      console.log(fetch.mock);
+    // await waitFor(() => {
+    //   expect(fetch).toHaveBeenCalledWith({
+    //     birth: '2022-11-01',
+    //     email: 'ilusca97@gmail.com',
+    //     id: '',
+    //     lastname: 'ILUSCA',
+    //     name: 'DORIN',
+    //   });
+    // });
+  });
+});
+
+describe('UserForm validation', () => {
+  beforeEach(async () => {
+    await act(async () => {
+      renderWithProviders(<UserForm />);
     });
+  });
+
+  it('should display required error when inputs are blank', async () => {
+    fetch.mockRejectOnce(() => ({ data: '' }));
+
+    await act(async () => {
+      fireEvent.submit(screen.getByRole('button', { name: /create user/i }));
+    });
+
+    expect(await screen.findAllByRole('alert')).toHaveLength(4);
+    expect(fetch).not.toBeCalled();
+  });
+
+  it('should display matching error when email is invalid', async () => {
+    await act(() => {
+      fireEvent.input(screen.getByPlaceholderText('First Name'), {
+        target: {
+          value: 'Test',
+        },
+      });
+    });
+    await act(() => {
+      fireEvent.input(screen.getByPlaceholderText('Last Name'), {
+        target: {
+          value: 'Name',
+        },
+      });
+    });
+    await act(() => {
+      fireEvent.input(screen.getByPlaceholderText('Email'), {
+        target: {
+          value: 'myemail',
+        },
+      });
+    });
+    await act(() => {
+      fireEvent.input(screen.getByPlaceholderText('Date of birth'), {
+        target: {
+          value: '2022-11-01',
+        },
+      });
+    });
+
+    await act(() => {
+      fireEvent.submit(screen.getByRole('button', { name: /create user/i }));
+    });
+
+    expect(await screen.findAllByRole('alert')).toHaveLength(1);
+    expect(screen.getByPlaceholderText('Email').value).toBe('myemail');
+    expect(screen.getByPlaceholderText('First Name').value).toBe('Test');
+  });
+
+  it('should display matching error when name is invalid', async () => {
+    fireEvent.input(screen.getByPlaceholderText('First Name'), {
+      target: {
+        value: 'Test123',
+      },
+    });
+    fireEvent.input(screen.getByPlaceholderText('Last Name'), {
+      target: {
+        value: 'Name123',
+      },
+    });
+    fireEvent.input(screen.getByPlaceholderText('Email'), {
+      target: {
+        value: 'myemail@gmail.com',
+      },
+    });
+    fireEvent.input(screen.getByPlaceholderText('Date of birth'), {
+      target: {
+        value: '2022-11-01',
+      },
+    });
+
+    fireEvent.submit(screen.getByRole('button', { name: /create user/i }));
+
+    expect(await screen.findAllByRole('alert')).toHaveLength(2);
+    expect(screen.getByPlaceholderText('First Name').value).toBe('Test123');
+    expect(screen.getByPlaceholderText('Last Name').value).toBe('Name123');
+  });
+
+  it('should not display any errors on valid inputs', async () => {
+    fetch.mockRejectOnce(() => ({ data: 'ok' }));
+    fireEvent.input(screen.getByPlaceholderText('First Name'), {
+      target: {
+        value: 'John',
+      },
+    });
+    fireEvent.input(screen.getByPlaceholderText('Last Name'), {
+      target: {
+        value: 'Doe',
+      },
+    });
+    fireEvent.input(screen.getByPlaceholderText('Email'), {
+      target: {
+        value: 'johndoe@mail.co',
+      },
+    });
+    fireEvent.input(screen.getByPlaceholderText('Date of birth'), {
+      target: {
+        value: '1999-11-01',
+      },
+    });
+
+    fireEvent.submit(screen.getByRole('button', { name: /create user/i }));
+
+    await waitFor(() => expect(screen.queryAllByRole('alert')).toHaveLength(0));
+    expect(fetch).toBeCalledTimes(1);
   });
 });

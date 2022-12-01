@@ -1,16 +1,31 @@
 .usersTable {
   border-collapse: collapse;
 }
+
 .usersTable td {
   padding: 5px 14px;
   text-align: left;
 }
+
 .usersTable th {
   text-transform: uppercase;
   text-align: left;
   font-size: 14px;
   padding: 5px 14px;
 }
+
 .main {
   margin-top: 1.5rem;
+}
+
+.hscroll {
+  overflow-x: auto;
+}
+
+@media (max-width: 768px) {
+
+  .usersTable td,
+  .usersTable th {
+    font-size: 0.85em;
+  }
 }
