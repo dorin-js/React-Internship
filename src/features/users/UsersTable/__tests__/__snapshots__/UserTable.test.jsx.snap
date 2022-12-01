@@ -10,7 +10,7 @@ exports[`Users Table should render table with 2 users 1`] = `
         class="main"
       >
         <table
-          class="usersTable"
+          class="usersTable hscroll"
         >
           <thead>
             <tr>
